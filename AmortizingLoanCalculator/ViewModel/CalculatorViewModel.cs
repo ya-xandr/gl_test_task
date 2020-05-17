@@ -24,7 +24,7 @@ namespace AmortizingLoanCalculator.ViewModel
             get
             {
                 if (mCalculator == null)
-                    mCalculator = new CalculateCommand(calculateParams.CalculateInterest, calculateParams.ValidateForm);
+                    mCalculator = new CalculateCommand(calculateParams.CalculateInterest);
                 return mCalculator;
             }
             set
@@ -38,24 +38,15 @@ namespace AmortizingLoanCalculator.ViewModel
             #region ICommand Members  
 
             Action<object> _executeMethod;
-            Func<object, bool> _canExecuteMethod;
 
-            public CalculateCommand(Action<object> execteMethod, Func<object, bool> canexecuteMethod)
+            public CalculateCommand(Action<object> execteMethod)
             {
                 _executeMethod = execteMethod;
-                _canExecuteMethod = canexecuteMethod;
             }
 
             public bool CanExecute(object parameter)
             {
-                if (_canExecuteMethod != null)
-                {
-                    return _canExecuteMethod(parameter);
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
 
             public event EventHandler CanExecuteChanged {

@@ -93,12 +93,33 @@ namespace AmortizingLoanCalculator.Model
 
         public void CalculateInterest(object parameter)
         {
-            RemainingInterestPayments = AmortizingLoan.RemainingInterestSum(InitialPrincipal, AnnualRate, InvestmentDuration, CalculationDate, AgreementDate);
+            string error = this.ValidateForm();
+            if (error.Length > 0)
+            {
+                MessageBox.Show(error);
+            }
+            else
+            {
+                RemainingInterestPayments = AmortizingLoan.RemainingInterestSum(InitialPrincipal, AnnualRate, InvestmentDuration, CalculationDate, AgreementDate);
+            }
         }
 
-        public bool ValidateForm(object parameter)
+        public string ValidateForm()
         {
-            return true;
+            string message = "";
+            if(InitialPrincipal <= 0)
+            {
+                message += "Illegal value of `Initial Principal` field. Must be positive number\n";
+            }
+            if (AnnualRate <= 0)
+            {
+                message += "Illegal value of `Annual Rate` field. Must be positive number\n";
+            }
+            if (InvestmentDuration <= 0)
+            {
+                message += "Illegal value of `Investment Duration` field. Must be positive number\n";
+            }
+            return message;
         }
 
         #region INotifyPropertyChanged Members  
